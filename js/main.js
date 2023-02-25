@@ -109,7 +109,7 @@ function addProductToCart(title, price, productImg) {
     var CartItems = document.getElementsByClassName('cart-content')[0];
 
     // Check weather product already in cart ?
-    var cartItemsNames = CartItems.getElementsByClassName('cart-product-title')
+    let cartItemsNames = CartItems.getElementsByClassName('cart-product-title')
     for (let i = 0; i < cartItemsNames.length; i++){
         if(cartItemsNames[i].innerText == title){
             alert('You have already add this item to cart');
