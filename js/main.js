@@ -75,6 +75,11 @@ function buyButtonClicked(){
 function removeCartItem(event){
     let buttonClicked = event.target;
     buttonClicked.parentElement.remove()
+
+    // decrease cart icon
+    let cartItemsNames = document.getElementsByClassName('cart-product-title');
+    let cartQuantity = document.getElementsByClassName('quantity')[0];
+    cartQuantity.innerHTML = `${cartItemsNames.length + 1 -1}`;
     updatetotal();
 }
 
