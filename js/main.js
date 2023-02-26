@@ -1,3 +1,61 @@
+const items = [
+{
+    label: "AEROREADY SHIRT",
+    price: 25,
+    image: "img/product1.jpg",
+},
+{
+    label: "WIRELESS EARBUDS",
+    price: 100,
+    image: "img/product2.jpg",
+},
+{
+    label: "HOODED PARKA",
+    price: 45,
+    image: "img/product3.jpg",
+},
+{
+    label: "STRAW METAL BOTTLE",
+    price: 24.04,
+    image: "img/product4.jpg",
+},
+{
+    label: "METAL GLASSES",
+    price: 50,
+    image: "img/product5.jpg",
+},
+{
+    label: "BACK HAT",
+    price: 50,
+    image: "img/product6.jpg",
+},
+{
+    label: "BACKPACK",
+    price: 70,
+    image: "img/product7.jpg",
+},
+{
+    label: "ULTRABOOST 22",
+    price: 45,
+    image: "img/product8.jpg",
+},
+
+]
+
+function mappingShopProducts(){
+    const product = document.getElementById("product");
+    items.map(item => {
+        product.innerHTML +=`<div class="product-box">
+            <img src=${item.image} alt="" class="product-img" />
+            <h2 class="product-title">${item.label}</h2>
+            <span class="price">$${item.price}</span>
+            <i class='bx bx-shopping-bag add-cart'></i>
+        </div>`
+    })
+}
+
+mappingShopProducts()
+
 // Cart
 let cartIcon = document.querySelector("#cart-icon");
 let cart = document.querySelector(".cart");
@@ -14,11 +72,7 @@ closeCart.onclick = () => {
 let quantityInputs = document.getElementsByClassName('cart-quantity')
 
 // cart working JS
-if (document.readyState == 'loading'){
-    document.addEventListener('DOMContentLoaded', ready)
-}else{
-    ready();
-}
+
 
 // making funtion 
 function ready(){
@@ -49,9 +103,11 @@ function ready(){
     
 }
 
+ready()
+
 // Buy button function
 function buyButtonClicked(){
-    let cartContent = document.getElementsByClassName('cart-content')[0];
+    let cartContent = document.getElementsByClassName('content')[0];
     let cartItems = cartContent.getElementsByClassName('cart-product-title')
     if(cartItems.length == 0){
         alert("Your cart is empty");
@@ -62,10 +118,8 @@ function buyButtonClicked(){
     while(cartContent.hasChildNodes()){
         cartContent.removeChild(cartContent.firstChild);
     }
-
     let cartQuantity = document.getElementsByClassName('quantity')[0];
     cartQuantity.innerHTML = 0;
-    
     alert("Your order is placed");
 
     updatetotal();
@@ -75,7 +129,6 @@ function buyButtonClicked(){
 function removeCartItem(event){
     let buttonClicked = event.target;
     buttonClicked.parentElement.remove()
-
     // decrease cart icon
     let cartItemsNames = document.getElementsByClassName('cart-product-title');
     let cartQuantity = document.getElementsByClassName('quantity')[0];
@@ -86,7 +139,6 @@ function removeCartItem(event){
 // quantitty changes
 function quantityChanged(event){
     var input = event.target;
-    
     if(isNaN(input.value) || input.value <= 0){
         input.value = 1;
     }
@@ -105,14 +157,14 @@ function addCartClicked(event){
 }
 
 function addProductToCart(title, price, productImg) {
-
-    var CartItems = document.getElementsByClassName('cart-content')[0];
-
+    var CartItems = document.getElementsByClassName('content')[0];
     // Check weather product already in cart ?
     let cartItemsNames = CartItems.getElementsByClassName('cart-product-title')
     for (let i = 0; i < cartItemsNames.length; i++){
         if(cartItemsNames[i].innerText == title){
-            alert('You have already add this item to cart');
+            let item = cartItemsNames[i].parentElement;
+            let quantity = Number(item.getElementsByClassName('cart-quantity')[0].value);
+            item.getElementsByClassName('cart-quantity')[0].value = quantity + 1;
             return;
         }
     }
@@ -124,15 +176,14 @@ function addProductToCart(title, price, productImg) {
     // append new item to cart
     var cartShopBox = document.createElement('div');
     cartShopBox.classList.add('cart-box');
-    let cartBoxContent = `
-                        <img src="${productImg}" alt="" class="cart-img">
-                        <div class="detail-box">
-                            <div class="cart-product-title">${title}</div>
-                            <div class="cart-price">${price}</div>
-                            <input type="number" value="1" class="cart-quantity">
-                        </div>
-                        <!-- Remove Cart -->
-                        <i class='bx bxs-trash-alt cart-remove'></i>`;
+    let cartBoxContent = `<img src="${productImg}" alt="" class="cart-img">
+        <div class="detail-box">
+        <div class="cart-product-title">${title}</div>
+        <div class="cart-price">${price}</div>
+        <input type="number" value="1" class="cart-quantity">
+        </div>
+        <!-- Remove Cart -->
+        <i class='bx bxs-trash-alt cart-remove'></i>`;
     
     cartShopBox.innerHTML = cartBoxContent
     CartItems.appendChild(cartShopBox);
@@ -146,7 +197,7 @@ function addProductToCart(title, price, productImg) {
 // update total
 function updatetotal(){
 
-    var cartContent = document.getElementsByClassName('cart-content')[0];
+    var cartContent = document.getElementsByClassName('content')[0];
     var cartBoxes = cartContent.getElementsByClassName('cart-box');
     var total = 0;
     for(let i = 0; i < cartBoxes.length; i++){
