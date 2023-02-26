@@ -69,7 +69,7 @@ header{
      position: fixed;
      top: 0;
      right: -100%;
-     width: 360px;
+     width: 380px;
      height: 100vh;
      padding: 20px;
      background: var(--bg-color);
@@ -299,10 +299,14 @@ header{
     .cart-box{
         grid-template-columns: 30% 50% 18%;
     }
-    .cart-procduct-title{
+    
+}
+
+@media only screen and (max-width: 372px){
+
+    .cart-product-title{
         width: 140px;
         height: 26px;
         overflow: hidden;
     }
 }
-
